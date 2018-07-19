@@ -21,6 +21,11 @@ GO
 CREATE DATABASE [eShopWithOrders]
 GO
 
+/*
+	此設定與 Azure SQL Database 相同
+	https://blogs.msdn.microsoft.com/sqlcat/2013/12/26/be-aware-of-the-difference-in-isolation-levels-if-porting-an-application-from-windows-azure-sql-db-to-sql-server-in-windows-azure-virtual-machine/
+*/
+
 --啟用 SNAPSHOT_ISOLATION
 ALTER DATABASE [eShopWithOrders]
 	SET ALLOW_SNAPSHOT_ISOLATION ON
