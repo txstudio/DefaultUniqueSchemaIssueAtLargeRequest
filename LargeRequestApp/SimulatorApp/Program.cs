@@ -54,21 +54,46 @@ namespace SimulatorApp
                 _cmd.Parameters["@IsSuccess"].Direction = ParameterDirection.Output;
 
                 var _count = _option.Count;
+                var _isSuccess = false;
+                var _exception = string.Empty;
+
+                Stopwatch _stopwatch = new Stopwatch();
 
                 for (int i = 0; i < _count; i++)
                 {
                     _cmd.Parameters["@IsSuccess"].Value = DBNull.Value;
 
+                    _stopwatch.Start();
+                    _isSuccess = false; 
+
                     try
                     {
+
                         _conn.Open();
                         _cmd.ExecuteNonQuery();
                         _conn.Close();
+
+
+                        var _returnValue = _cmd.Parameters["@IsSuccess"].Value;
+
+                        _isSuccess = Convert.ToBoolean(_returnValue);
+
                     }
                     catch(Exception ex)
                     {
-                        Console.WriteLine(JsonConvert.SerializeObject(ex, Formatting.Indented));
+                        _exception = (JsonConvert.SerializeObject(ex, Formatting.Indented));
                     }
+
+                    _stopwatch.Stop();
+
+                    Console.WriteLine("add order\treturn:{0}\telapsed:{1}"
+                                    , _isSuccess
+                                    , _stopwatch.ElapsedMilliseconds);
+
+                    if (string.IsNullOrWhiteSpace(_exception) == false)
+                        Console.WriteLine(_exception);
+
+                    _stopwatch.Reset();
                 }
             }
         }
