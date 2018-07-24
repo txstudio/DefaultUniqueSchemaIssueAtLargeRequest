@@ -17,7 +17,7 @@ namespace SimulatorApp
 
         static void Main(string[] args)
         {
-            args = new string[] { "-t", "20", "-e", "14:15", "-c", "10" };
+            args = new string[] { "-t", "40","-c", "5" };
 
             SetArgs(_option, args);
 
