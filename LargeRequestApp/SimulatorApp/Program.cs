@@ -115,9 +115,6 @@ namespace SimulatorApp
                         case "-t":
                             option.TaskNumber = args[_index];
                             break;
-                        case "-e":
-                            option.StartTime = args[_index];
-                            break;
                         case "-c":
                             option.CountString = args[_index];
                             break;
