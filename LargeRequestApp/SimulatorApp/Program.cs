@@ -14,6 +14,7 @@ namespace SimulatorApp
         const string ConnectionString = "Server=192.168.0.80;Database=eShopWithOrders;User Id=sa;Password=Pa$$w0rd;";
 
         static LoaderOptions _option = new LoaderOptions();
+        static bool _exit = false;
 
         static void Main(string[] args)
         {
@@ -30,6 +31,30 @@ namespace SimulatorApp
 
             for (int i = 0; i < _option.Task; i++)
                 _tasks[i].Start();
+
+            //判斷是否已經完成模擬
+            while (_exit == false)
+            {
+                _exit = true;
+
+                for (int i = 0; i < _option.Task; i++)
+                {
+                    if (_tasks[i].Status == TaskStatus.Running
+                        || _tasks[i].Status == TaskStatus.WaitingToRun)
+                    {
+                        Thread.Sleep(100);
+                        _exit = false;
+                        continue;
+                    }
+                }
+
+                if (_exit == false)
+                    continue;
+
+                _exit = true;
+
+                Thread.Sleep(1000);
+            }
 
             Console.WriteLine("press any key to exit");
             Console.ReadKey();
